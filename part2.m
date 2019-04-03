@@ -44,3 +44,18 @@ td = 0.3867
 pid = kp*(1+1/(s*td) + s*td/(td*s+1));
 pidnum = [ 6.216 16.08 41.57];
 pidden = [0.3867 0]
+%% Q design
+
+ss1_num  = 0.1;
+ss1_den = [1.8 4.5 1];
+g1 = tf(ss1_num,ss1_den);
+
+F = tf(1/2.05, [1 4*sqrt(1/2.05)/3 1/2.05]);
+Q = F *1/g1;
+C = Q/(1-Q*g1)*10;
+
+T = g1*C/(1+g1*C);
+
+Suo = C/(1+C*g1);
+
+
