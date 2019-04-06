@@ -46,17 +46,15 @@ pidnum = [ 6.216 16.08 41.57];
 pidden = [0.3867 0];
 %% Q design
 
-wn = 0.8;
-k=10;
+wn = 0.4;
 
 ss1_num  = 0.1;
 ss1_den = [1.8 4.5 1];
 g1 = tf(ss1_num,ss1_den);
 
-F = tf(k*wn^2,[1 1.4*wn wn^2])
-%Q = tf(wn^2*[1.8 4.5 1], [1 0.14*wn wn^2])
-Q = F *1/g1
-
+F = tf(wn^2)
+Q = tf(wn^2*[1.8 4.5 1], [1 0.14*wn wn^2])
+%Q = F *1/g1
 C = Q/(1-Q*g1)
 
 T = g1*C/(1+g1*C);
