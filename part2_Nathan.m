@@ -46,16 +46,16 @@ pidnum = [ 6.216 16.08 41.57];
 pidden = [0.3867 0];
 %% Q design
 
-wn = 0.05;
-k=1;
+wn = 1; 
+k=0.1; %gain on filter to increase controller gain
 a = 0.8;
 
 ss1_num  = 0.1;
 ss1_den = [1.8 4.5 1];
 g1 = tf(ss1_num,ss1_den);
 
-F = tf(1,[a^2 2*a 1])
-%F = tf(k*wn^2,[1 1.4*wn wn^2])
+%F = tf(1,[a^2 2*a 1])
+F = tf(k*wn^2,[1 1.4*wn wn^2]); %zeta = 0.7 for fast rise and settling
 %Q = tf(wn^2*[1.8 4.5 1], [1 0.14*wn wn^2])
 Q = F *1/g1;
 
