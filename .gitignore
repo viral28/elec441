@@ -1,0 +1,16 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!.git
+!part2_Nathan.m
+!part2_Nathan.slx
+!part2_viral.m
+!part2_viral.slx
+!Qdesign_simulation_Viral.slx
+!Qdesign_Viral.m
+# etc...
+
+# ...even if they are in subdirectories
+!*/
