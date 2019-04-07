@@ -34,7 +34,7 @@ temp =1-exp(s*-0.7);
 s = tf('s');
 temp =1-exp(s*-0.7);
 c_smith = c1/(1+c1*g1*(1-exp(s*-0.7)));
-c_smithtf = ss2tf(c_smith.A,c_smith.B,c_smith.C,c_smith.D)
+c_smithtf = ss2tf(c_smith.A,c_smith.B,c_smith.C,c_smith.D);
 
 %% PID
 kp = 41.5716;
@@ -46,30 +46,45 @@ pidnum = [ 6.216 16.08 41.57];
 pidden = [0.3867 0];
 %% Q design
 
-wn = 1; 
+wn_sq = 0.5; 
 k=0.1; %gain on filter to increase controller gain
-a = 0.8;
-
+%a = 0.2;
+Z = 0.65;
+p=1;
 ss1_num  = 0.1;
 ss1_den = [1.8 4.5 1];
 g1 = tf(ss1_num,ss1_den);
-
-%F = tf(1,[a^2 2*a 1])
-F = tf(k*wn^2,[1 1.4*wn wn^2]); %zeta = 0.7 for fast rise and settling
+%F = tf(wn_sq,[1 2*Z*sqrt(wn_sq)+p  2*Z*sqrt(wn_sq)*p + wn_sq p*wn_sq])
+F = tf(k*wn_sq,[1 2*Z*sqrt(wn_sq) wn_sq])
+%F = tf(k*wn^2,[1 1.4*wn wn^2]); %zeta = 0.7 for fast rise and settling
 %Q = tf(wn^2*[1.8 4.5 1], [1 0.14*wn wn^2])
-Q = F *1/g1;
+Q = F*1/g1
 
-C = Q/(1-Q*g1);
+C = Q/(1-Q*g1)
 
-T = g1*C/(1+g1*C);
+T = g1*C/(1+g1*C)
 
-Suo = C/(1+C*g1);
+os = exp((-Z*pi)/(sqrt(1-Z^2)))
+
+% Suo = Q;
+% Sio = (1-Q*g1)*g1;
+% So = 1-Q*g1;
+% To = Q*g1;
+bode(Q)
+%roots([0.01152 0.0288 0.0064]);
+%roots([0.18 0.6516 0.7192 0.4 0.064]);
+
+
+
 
 %bode(Q);
 
 %bode(C)
 
-bode(Q)
+% bode(Q);
+% 
+% roots([1.8 4.5 1]);
+
 
 
 
